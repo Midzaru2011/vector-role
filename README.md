@@ -14,12 +14,12 @@ Role Variables
 
 Example Playbook
 ----------------
-
+```
 - name: Install Vector
   hosts: clickhouse
   roles:
     - vector-role
-
+```
 
 Author Information
 ------------------
