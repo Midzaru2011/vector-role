@@ -1,17 +1,28 @@
 ---
-- name: Install vector packages
+- name: Include tasks install CentOS
+  ansible.builtin.include_tasks: install_yum.yml
+  when: ansible_host == "CentOS"
+
+- name: Include tasks install Ubuntu
+  ansible.builtin.include_tasks: install_apt.yml
+  when: ansible_host == "Ubuntu"
+
+- name: Vector | Create data dir
   become: true
-  ansible.builtin.apt:
-    deb: "https://packages.timber.io/vector/{{ vector_version }}/vector_{{ vector_version }}-1_amd64.deb"
-  notify: Restart vector service
-- name: Template a config to /etc/vector/vector.toml
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ vector_config_dir }}"
+    state: "directory"
+- name: Vector | Template config
   become: true
-  become_user: root
   ansible.builtin.template:
-    src: templates/vector.toml
-    dest: /etc/vector/vector.toml
-    owner: root
-    group: root
-    mode: "0644"
-  notify:
-    - Restart vector service
+    src: "templates/vector.yml.j2"
+    dest: "{{ vector_config_dir }}/vector.yaml"
+    mode: "0755"
+- name: Vector | Register service
+  become: true
+  ansible.builtin.template:
+    src: "templates/vector.service.j2"
+    dest: "/etc/systemd/system/vector.service"
+    mode: "0755"
+    backup: true
