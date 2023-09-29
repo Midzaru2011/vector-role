@@ -16,7 +16,7 @@ Example Playbook
 ----------------
 
 - name: Install Vector
-  hosts: clickhouse
+  hosts: all
   roles:
     - vector-role
 
