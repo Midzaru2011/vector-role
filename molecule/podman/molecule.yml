@@ -2,13 +2,10 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: podman
 platforms:
   - name: centos
     image: docker.io/pycontribs/centos:7
-    pre_build_image: true
-  - name: ubuntu
-    image: docker.io/pycontribs/ubuntu:latest
     pre_build_image: true
 provisioner:
   name: ansible

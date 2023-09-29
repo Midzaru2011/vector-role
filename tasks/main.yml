@@ -1,11 +1,11 @@
 ---
 - name: Include tasks install CentOS
   ansible.builtin.include_tasks: install_yum.yml
-  when: ansible_host == "CentOS"
+  when: ansible_host == "centos"
 
 - name: Include tasks install Ubuntu
   ansible.builtin.include_tasks: install_apt.yml
-  when: ansible_host == "Ubuntu"
+  when: ansible_host == "ubuntu"
 
 - name: Vector | Create data dir
   become: true
