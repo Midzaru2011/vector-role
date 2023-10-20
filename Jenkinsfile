@@ -16,11 +16,6 @@ pipeline {
                 sh 'pip3 install molecule==3.5.2 molecule-docker'
             }
         }
-        stage('echo') {
-            steps {
-                sh 'echo $PATH'
-            }
-        }
         stage('add community.docker') {
             steps {
                 sh 'ansible-galaxy collection install community.docker'
