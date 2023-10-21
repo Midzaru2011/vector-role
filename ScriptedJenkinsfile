@@ -1,0 +1,18 @@
+node("slave"){
+    stage("Git checkout"){
+        git credentialsId: 'git', url: 'https://github.com/aragastmatb/example-playbook.git'
+    }
+    stage('preparation for run playbook') {
+        sh 'sudo mkdir -p /opt/jdk/openjdk-11'
+    }    
+    stage("Run playbook"){
+        if (params.prod_line == true) {
+            sh 'sudo ansible-playbook site.yml -i inventory/prod.yml'
+        }
+        else
+        {
+            sh 'sudo ansible-playbook site.yml -i inventory/prod.yml --check --diff'
+        }
+        
+    }
+}
