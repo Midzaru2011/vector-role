@@ -6,7 +6,7 @@ node("slave"){
         sh 'sudo mkdir -p /opt/jdk/openjdk-11'
     }    
     stage("Run playbook"){
-        if (params.prod_line == true) {
+        if (params.prod_run == true) {
             sh 'sudo ansible-playbook site.yml -i inventory/prod.yml'
         }
         else
